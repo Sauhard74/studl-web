@@ -7,7 +7,7 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [showPassword, setShowPassword] = useState(false); // pata nhi vscode wale ais ne likh diya apne aap
+  const [showPassword, setShowPassword] = useState(false); // pata nhi vscode ke copilot ne suggest kara diya apne aap
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -75,6 +75,15 @@ export default function Login() {
         <div className="social-icons">
           <a href="#"><i className="bx bxl-google"></i></a>
           </div>
+          {/* Bottom links */}
+      <div className="bottom-options">
+        <a href="registration page ka link " className="Don’t have an Account">
+         Don’t have an Account
+        </a>
+        <a href="/org-registration" className="register-org">
+          Register as Organization
+        </a>
+      </div>
       </div>
   );
 
