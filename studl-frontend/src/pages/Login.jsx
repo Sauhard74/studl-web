@@ -7,11 +7,7 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
-  // staff login state
-  const [staffEmail, setStaffEmail] = useState("");
-  const [staffPassword, setStaffPassword] = useState("");
-  const [showStaffPassword, setShowStaffPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // pata nhi vscode ke copilot ne suggest kara diya apne aap
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -62,6 +58,7 @@ export default function Login() {
     }
   };
 
+  }
   return (
     <div className="login-page">
       <div className="login-container"></div>
@@ -100,49 +97,11 @@ export default function Login() {
         Login
       </Button>
 
-      <p>or login with Google</p>
-      <div className="social-icons">
-        <a href="#"><i className="bx bxl-google"></i></a>
-      </div>
-
-      <div className="login-container staff-login">
-        <h2>Login as Staff</h2>
-
-        {/* Email Input */}
-        <TextBox 
-          type="email" 
-          placeholder="Enter your email" 
-          value={staffEmail} 
-          onChange={(e) => setStaffEmail(e.target.value)} 
-        />
-        <div style={{ position: "relative" }}>
-          <TextBox 
-            type={showStaffPassword ? "text" : "password"} 
-            placeholder="Enter your password" 
-            value={staffPassword} 
-            onChange={(e) => setStaffPassword(e.target.value)} 
-          />
-          <button 
-            type="button" 
-            onClick={() => setShowStaffPassword(!showStaffPassword)}
-            style={{ position: "absolute", right: "10px", top: "50%" }}
-          >
-            {showStaffPassword ? "Hide" : "Show"}
-          </button>
-          <a href="#" className="forgot-link">Forgot password?</a>
-
-          <Button className="btn" onClick={handleStaffLogin}>
-            Login
-          </Button>
-
-          <p>or login with Google</p>
-          <div className="social-icons">
-            <a href="#"><i className="bx bxl-google"></i></a>
+        <p>or login with Google</p>
+        <div className="social-icons">
+          <a href="#"><i className="bx bxl-google"></i></a>
           </div>
-        </div>
-      </div>
-
-      {/* Bottom links */}
+          {/* Bottom links */}
       <div className="bottom-options">
         <a href="registration page ka link " className="Don’t have an Account">
           Don’t have an Account
