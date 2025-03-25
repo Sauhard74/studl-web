@@ -21,7 +21,7 @@ export default function Registration() {
   const [staffPassword, setStaffPassword] = useState("");
   const [staffConfirmPassword, setStaffConfirmPassword] = useState("");
   const [staffError, setStaffError] = useState("");
-  const [staffShowPassword, setStaffShowPassword] = useState(false);
+  const [staffShowPassword] = useState(false);
 
   const handleStudentRegistration = async () => {
     if (!studentName || !studentEmail || !studentPassword || !studentConfirmPassword) {
@@ -53,6 +53,7 @@ export default function Registration() {
       } else {
         setStudentError("Registration failed. Please try again.");
       }
+    // eslint-disable-next-line no-unused-vars
     } catch (error) {
       setStudentError("Server error, please try again.");
     }
@@ -88,6 +89,7 @@ export default function Registration() {
       } else {
         setStaffError("Registration failed. Please try again.");
       }
+    // eslint-disable-next-line no-unused-vars
     } catch (error) {
       setStaffError("Server error, please try again.");
     }
