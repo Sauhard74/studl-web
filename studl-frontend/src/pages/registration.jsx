@@ -94,134 +94,162 @@ export default function Registration() {
   };
 
   return (
-    <div className="registration-page">
-      <div className="registration-cards-container">
-        {/* Student Registration Card */}
-        <div className={`registration-card student-card ${activeCard === "student" ? "active" : ""}`}>
-          <h2>Register as Student</h2>
-          
-          {studentError && <div className="error-message">{studentError}</div>}
-          
-          {/* Name Input */}
-          <TextBox
-            type="text"
-            placeholder="Enter your name"
-            value={studentName}
-            onChange={(e) => setStudentName(e.target.value)}
-          />
-          
-          {/* Email Input */}
-          <TextBox
-            type="email"
-            placeholder="Enter your email"
-            value={studentEmail}
-            onChange={(e) => setStudentEmail(e.target.value)}
-          />
-          
-          {/* Password Input */}
-          <div style={{ position: "relative" }}>
+      <div className="min-h-screen flex flex-col items-center justify-center bg-blue-50 px-4 py-12">
+        {/* Toggle Buttons */}
+        <div className="flex gap-4 mb-6">
+          <button
+            onClick={() => setActiveCard("student")}
+            className={`px-5 py-2 rounded-full text-sm font-medium transition ${
+              activeCard === "student"
+                ? "bg-blue-600 text-white"
+                : "bg-white border border-blue-600 text-blue-600"
+            }`}
+          >
+            Student
+          </button>
+          <button
+            onClick={() => setActiveCard("staff")}
+            className={`px-5 py-2 rounded-full text-sm font-medium transition ${
+              activeCard === "staff"
+                ? "bg-blue-600 text-white"
+                : "bg-white border border-blue-600 text-blue-600"
+            }`}
+          >
+            Staff
+          </button>
+        </div>
+    
+        {/* Card container */}
+        <div className="relative w-full max-w-md h-[500px] overflow-hidden bg-white rounded-2xl shadow-xl transition-all duration-300">
+          {/* Student Registration Form */}
+          <div
+            className={`absolute top-0 left-0 w-full h-full p-8 space-y-5 transition-all duration-500 ease-in-out ${
+              activeCard === "student" ? "translate-x-0" : "-translate-x-full opacity-0 pointer-events-none"
+            }`}
+          >
+            <h2 className="text-xl font-bold text-blue-800 text-center">Register as Student</h2>
+    
+            {studentError && <div className="text-red-500 text-sm text-center">{studentError}</div>}
+    
             <TextBox
-              type={studentShowPassword ? "text" : "password"}
-              placeholder="Create password"
-              value={studentPassword}
-              onChange={(e) => setStudentPassword(e.target.value)}
+              type="text"
+              placeholder="Enter your name"
+              value={studentName}
+              onChange={(e) => setStudentName(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
             />
-            <button
-              type="button"
-              onClick={() => setStudentShowPassword(!studentShowPassword)}
-              style={{ position: "absolute", right: "10px", top: "50%" }}
-            >
-              {studentShowPassword ? "Hide" : "Show"}
-            </button>
-          </div>
-          
-          {/* Confirm Password Input */}
-          <div style={{ position: "relative" }}>
+            <TextBox
+              type="email"
+              placeholder="Enter your email"
+              value={studentEmail}
+              onChange={(e) => setStudentEmail(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+            />
+            <div className="relative">
+              <TextBox
+                type={studentShowPassword ? "text" : "password"}
+                placeholder="Create password"
+                value={studentPassword}
+                onChange={(e) => setStudentPassword(e.target.value)}
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+              />
+              <button
+                type="button"
+                onClick={() => setStudentShowPassword(!studentShowPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-blue-600 hover:underline"
+              >
+                {studentShowPassword ? "Hide" : "Show"}
+              </button>
+            </div>
             <TextBox
               type={studentShowPassword ? "text" : "password"}
               placeholder="Confirm password"
               value={studentConfirmPassword}
               onChange={(e) => setStudentConfirmPassword(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
             />
+            <Button
+              className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
+              onClick={handleStudentRegistration}
+            >
+              Register
+            </Button>
+    
+            <div className="text-center text-sm text-gray-500">or register with</div>
+            <a
+              href="#"
+              className="flex items-center justify-center gap-2 px-4 py-2 border border-red-500 text-red-500 rounded-md hover:bg-red-50 transition text-sm font-medium"
+            >
+              <i className="bx bxl-google text-lg"></i> Google
+            </a>
           </div>
-          
-          <Button className="btn" onClick={handleStudentRegistration}>
-            Register
-          </Button>
-          
-          <div className="social-login">
-            <p>or register with Google</p>
-            <div className="social-icons">
-              <a href="#"><i className="bx bxl-google"></i></a>
-            </div>
-          </div>
-        </div>
-        
-        {/* Staff Registration Card */}
-        <div className={`registration-card staff-card ${activeCard === "staff" ? "active" : ""}`}>
-          <h2>Register as Staff</h2>
-          
-          {staffError && <div className="error-message">{staffError}</div>}
-          
-          {/* Name Input */}
-          <TextBox
-            type="text"
-            placeholder="Enter your name"
-            value={staffName}
-            onChange={(e) => setStaffName(e.target.value)}
-          />
-          
-          {/* Email Input */}
-          <TextBox
-            type="email"
-            placeholder="Enter your email"
-            value={staffEmail}
-            onChange={(e) => setStaffEmail(e.target.value)}
-          />
-          
-          {/* Password Input */}
-          <div style={{ position: "relative" }}>
+    
+          {/* Staff Registration Form */}
+          <div
+            className={`absolute top-0 left-full w-full h-full p-8 space-y-5 transition-all duration-500 ease-in-out ${
+              activeCard === "staff" ? "-translate-x-full opacity-100" : "translate-x-0 opacity-0 pointer-events-none"
+            }`}
+          >
+            <h2 className="text-xl font-bold text-blue-800 text-center">Register as Staff</h2>
+    
+            {staffError && <div className="text-red-500 text-sm text-center">{staffError}</div>}
+    
             <TextBox
-              type={staffShowPassword ? "text" : "password"}
-              placeholder="Create password"
-              value={staffPassword}
-              onChange={(e) => setStaffPassword(e.target.value)}
+              type="text"
+              placeholder="Enter your name"
+              value={staffName}
+              onChange={(e) => setStaffName(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
             />
-            
-          </div>
-          
-          {/* Confirm Password Input */}
-          <div style={{ position: "relative" }}>
+            <TextBox
+              type="email"
+              placeholder="Enter your email"
+              value={staffEmail}
+              onChange={(e) => setStaffEmail(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+            />
+            <div className="relative">
+              <TextBox
+                type={staffShowPassword ? "text" : "password"}
+                placeholder="Create password"
+                value={staffPassword}
+                onChange={(e) => setStaffPassword(e.target.value)}
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
             <TextBox
               type={staffShowPassword ? "text" : "password"}
               placeholder="Confirm password"
               value={staffConfirmPassword}
               onChange={(e) => setStaffConfirmPassword(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
             />
-          </div>
-          
-          <Button className="btn" onClick={handleStaffRegistration}>
-            Register
-          </Button>
-          
-          <div className="social-login">
-            <p>or register with Google</p>
-            <div className="social-icons">
-              <a href="#"><i className="bx bxl-google"></i></a>
-            </div>
+            <Button
+              className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
+              onClick={handleStaffRegistration}
+            >
+              Register
+            </Button>
+    
+            <div className="text-center text-sm text-gray-500">or register with</div>
+            <a
+              href="#"
+              className="flex items-center justify-center gap-2 px-4 py-2 border border-red-500 text-red-500 rounded-md hover:bg-red-50 transition text-sm font-medium"
+            >
+              <i className="bx bxl-google text-lg"></i> Google
+            </a>
           </div>
         </div>
+    
+        {/* Bottom Links */}
+        <div className="mt-6 text-sm text-blue-700 flex flex-col items-center gap-1">
+          <a href="/login" className="hover:underline">
+            Already have an account? Login
+          </a>
+          <a href="/org-registration" className="hover:underline">
+            Register as Organization
+          </a>
+        </div>
       </div>
-      
-      {/* Bottom links */}
-      <div className="bottom-options">
-        <a href="/login" className="already-account">
-          Already have an account? Login
-        </a>
-        <a href="/org-registration" className="register-org">
-          Register as Organization
-        </a>
-      </div>
-    </div>
-  );
+    );    
 }
