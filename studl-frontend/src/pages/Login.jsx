@@ -43,146 +43,136 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-blue-50 px-4 py-12">
-      {/* Toggle Buttons */}
-      <div className="flex gap-4 mb-6">
-        <button
-          onClick={() => setActiveTab("student")}
-          className={`px-5 py-2 rounded-full text-sm font-medium transition ${
-            activeTab === "student"
-              ? "bg-blue-600 text-white"
-              : "bg-white border border-blue-600 text-blue-600"
-          }`}
-        >
-          Student
-        </button>
-        <button
-          onClick={() => setActiveTab("staff")}
-          className={`px-5 py-2 rounded-full text-sm font-medium transition ${
-            activeTab === "staff"
-              ? "bg-blue-600 text-white"
-              : "bg-white border border-blue-600 text-blue-600"
-          }`}
-        >
-          Staff
-        </button>
-      </div>
-
-      {/* Card Wrapper with Slide Animation */}
-      <div className="relative w-full max-w-md h-[460px] overflow-hidden rounded-2xl bg-white shadow-xl">
-        {/* Form Container */}
-        <div
-          className={`absolute top-0 left-0 w-full h-full transition-all duration-500 ease-in-out
-            ${activeTab === "student" ? "translate-x-0" : "-translate-x-full"}`}
-        >
-          {/* Student Login Form */}
-          <div className="p-8 space-y-5">
-            <h2 className="text-xl font-bold text-blue-800 text-center">Login as Student</h2>
-            {error && activeTab === "student" && (
-              <div className="text-red-500 text-sm text-center">{error}</div>
-            )}
-            <TextBox
-              type="email"
-              placeholder="Enter your email"
-              value={studentEmail}
-              onChange={(e) => setStudentEmail(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
-            />
-            <div className="relative">
-              <TextBox
-                type={showStudentPassword ? "text" : "password"}
-                placeholder="Enter your password"
-                value={studentPassword}
-                onChange={(e) => setStudentPassword(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
-              />
+    <div className="min-h-screen grid grid-cols-1 md:grid-cols-2">
+      {/* LEFT PANEL: FORM */}
+      <div className="flex items-center justify-center bg-white px-8 py-12">
+        <div className="w-full max-w-md space-y-6">
+          {/* Tab Switcher */}
+          <div className="flex gap-4">
+            {["student", "staff"].map((role) => (
               <button
-                onClick={() => setShowStudentPassword(!showStudentPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-blue-600 hover:underline"
+                key={role}
+                onClick={() => setActiveTab(role)}
+                className={`px-5 py-2 rounded-full text-sm font-medium transition ${
+                  activeTab === role
+                    ? "bg-blue-600 text-white"
+                    : "bg-white border border-blue-600 text-blue-600"
+                }`}
               >
-                {showStudentPassword ? "Hide" : "Show"}
+                {role.charAt(0).toUpperCase() + role.slice(1)}
               </button>
-            </div>
-            <div className="text-right">
-              <a href="#" className="text-sm text-blue-600 hover:underline">Forgot password?</a>
-            </div>
-            <Button
-              className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
-              onClick={() => handleLogin("student")}
-            >
-              Login
-            </Button>
-            <div className="text-center text-sm text-gray-500">or login with</div>
-            <a
-              href="#"
-              className="flex items-center justify-center gap-2 px-4 py-2 border border-red-500 text-red-500 rounded-md hover:bg-red-50 transition text-sm font-medium"
-            >
-              <i className="bx bxl-google text-lg"></i> Google
-            </a>
+            ))}
           </div>
-        </div>
-
-        {/* Staff Login Form */}
-        <div
-          className={`absolute top-0 left-full w-full h-full transition-all duration-500 ease-in-out
-            ${activeTab === "staff" ? "-translate-x-full" : "translate-x-0"}`}
-        >
-          <div className="p-8 space-y-5">
-            <h2 className="text-xl font-bold text-blue-800 text-center">Login as Staff</h2>
-            {error && activeTab === "staff" && (
-              <div className="text-red-500 text-sm text-center">{error}</div>
-            )}
+  
+          {/* Header */}
+          <div>
+            <h2 className="text-2xl font-bold text-gray-900">Welcome Back 👋</h2>
+            <p className="text-sm text-gray-500">
+              Please enter your details to sign in to your account
+            </p>
+          </div>
+  
+          {/* Error */}
+          {error && (
+            <div className="text-red-500 text-sm text-center">{error}</div>
+          )}
+  
+          {/* Inputs */}
+          <TextBox
+            type="email"
+            placeholder="Enter your email"
+            value={activeTab === "student" ? studentEmail : staffEmail}
+            onChange={(e) =>
+              activeTab === "student"
+                ? setStudentEmail(e.target.value)
+                : setStaffEmail(e.target.value)
+            }
+            className="w-full px-4 py-2 border border-gray-300 rounded-md"
+          />
+  
+          <div className="relative">
             <TextBox
-              type="email"
-              placeholder="Enter your email"
-              value={staffEmail}
-              onChange={(e) => setStaffEmail(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+              type={
+                activeTab === "student"
+                  ? showStudentPassword
+                    ? "text"
+                    : "password"
+                  : showStaffPassword
+                  ? "text"
+                  : "password"
+              }
+              placeholder="Enter your password"
+              value={activeTab === "student" ? studentPassword : staffPassword}
+              onChange={(e) =>
+                activeTab === "student"
+                  ? setStudentPassword(e.target.value)
+                  : setStaffPassword(e.target.value)
+              }
+              className="w-full px-4 py-2 border border-gray-300 rounded-md"
             />
-            <div className="relative">
-              <TextBox
-                type={showStaffPassword ? "text" : "password"}
-                placeholder="Enter your password"
-                value={staffPassword}
-                onChange={(e) => setStaffPassword(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
-              />
-              <button
-                onClick={() => setShowStaffPassword(!showStaffPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-blue-600 hover:underline"
-              >
-                {showStaffPassword ? "Hide" : "Show"}
-              </button>
-            </div>
-            <div className="text-right">
-              <a href="#" className="text-sm text-blue-600 hover:underline">Forgot password?</a>
-            </div>
-            <Button
-              className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
-              onClick={() => handleLogin("staff")}
+            <button
+              onClick={() =>
+                activeTab === "student"
+                  ? setShowStudentPassword((p) => !p)
+                  : setShowStaffPassword((p) => !p)
+              }
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-blue-600 hover:underline"
             >
-              Login
-            </Button>
-            <div className="text-center text-sm text-gray-500">or login with</div>
-            <a
-              href="#"
-              className="flex items-center justify-center gap-2 px-4 py-2 border border-red-500 text-red-500 rounded-md hover:bg-red-50 transition text-sm font-medium"
-            >
-              <i className="bx bxl-google text-lg"></i> Google
-            </a>
+              Show
+            </button>
+          </div>
+  
+          {/* CTA Button */}
+          <Button
+            onClick={() => handleLogin(activeTab)}
+            className="w-full bg-black text-white py-2 rounded-md hover:bg-gray-900"
+          >
+            Sign In
+          </Button>
+  
+          {/* Divider */}
+          <div className="text-center text-sm text-gray-500">OR</div>
+  
+          {/* Google Sign In */}
+          <a
+            href="#"
+            className="flex items-center justify-center gap-2 px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 transition text-sm font-medium"
+          >
+            <i className="bx bxl-google text-lg"></i> Sign in with Google
+          </a>
+  
+          {/* Bottom link */}
+          <div className="text-center text-sm text-gray-500">
+            Don’t have an account?{" "}
+            <Link to="/register" className="text-blue-600 hover:underline">
+              Sign up
+            </Link>
           </div>
         </div>
       </div>
+  
+      {/* RIGHT PANEL: TESTIMONIAL */}
+      <div className="hidden md:block relative w-full h-screen">
+        {/* Full background image */}
+        <img
+          src="src/assets/quotes.png"
+          alt="Testimonial"
+          className="w-full h-full object-cover"
+        />
 
-      {/* Bottom Links */}
-      <div className="mt-6 text-sm text-blue-700 flex flex-col items-center gap-1">
-        <Link to="/register" className="hover:underline">
-          Don’t have an account? Register as Student
-        </Link>
-        <Link to="/org-registration" className="hover:underline">
-          Register as Organization
-        </Link>
+        {/* Overlay for quote */}
+        <div className="absolute inset-0 bg-black/30"></div> {/* Optional dark overlay */}
+
+        {/* Text inside image */}
+        <div className="absolute bottom-12 px-10 w-full text-white text-center">
+          <p className="text-sm italic leading-relaxed drop-shadow-md max-w-lg mx-auto">
+            “The Course of UX Research in Studl was an eye-opening experience that provided me with invaluable insights and practical skills. The instructors were knowledgeable and engaging, guiding us through real-world scenarios and making the learning process enjoyable.”
+          </p>
+          <div className="mt-4 font-semibold text-white">Laila Changgun</div>
+          <div className="text-sm text-gray-200">UX Intern – YouTube</div>
+        </div>
       </div>
+
     </div>
-  );
+  );  
 }
