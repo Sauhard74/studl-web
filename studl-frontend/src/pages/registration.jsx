@@ -96,162 +96,102 @@ export default function Registration() {
   };
 
   return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-blue-50 px-4 py-12">
-        {/* Toggle Buttons */}
-        <div className="flex gap-4 mb-6">
-          <button
-            onClick={() => setActiveCard("student")}
-            className={`px-5 py-2 rounded-full text-sm font-medium transition ${
-              activeCard === "student"
-                ? "bg-blue-600 text-white"
-                : "bg-white border border-blue-600 text-blue-600"
-            }`}
-          >
-            Student
-          </button>
-          <button
-            onClick={() => setActiveCard("staff")}
-            className={`px-5 py-2 rounded-full text-sm font-medium transition ${
-              activeCard === "staff"
-                ? "bg-blue-600 text-white"
-                : "bg-white border border-blue-600 text-blue-600"
-            }`}
-          >
-            Staff
-          </button>
-        </div>
-    
-        {/* Card container */}
-        <div className="relative w-full max-w-md h-[500px] overflow-hidden bg-white rounded-2xl shadow-xl transition-all duration-300">
-          {/* Student Registration Form */}
-          <div
-            className={`absolute top-0 left-0 w-full h-full p-8 space-y-5 transition-all duration-500 ease-in-out ${
-              activeCard === "student" ? "translate-x-0" : "-translate-x-full opacity-0 pointer-events-none"
-            }`}
-          >
-            <h2 className="text-xl font-bold text-blue-800 text-center">Register as Student</h2>
-    
-            {studentError && <div className="text-red-500 text-sm text-center">{studentError}</div>}
-    
-            <TextBox
-              type="text"
-              placeholder="Enter your name"
-              value={studentName}
-              onChange={(e) => setStudentName(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
-            />
-            <TextBox
-              type="email"
-              placeholder="Enter your email"
-              value={studentEmail}
-              onChange={(e) => setStudentEmail(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
-            />
-            <div className="relative">
-              <TextBox
-                type={studentShowPassword ? "text" : "password"}
-                placeholder="Create password"
-                value={studentPassword}
-                onChange={(e) => setStudentPassword(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
-              />
+    <div className="flex min-h-screen">
+      {/* LEFT PANEL: Sliding Registration Form */}
+      <div className="flex-1 flex items-center justify-center bg-white px-6 py-12 relative">
+        <div className="absolute top-6 left-6 text-xl font-semibold text-blue-700">Studl</div>
+  
+        <div className="w-full max-w-md space-y-6 relative overflow-hidden h-[540px]">
+          {/* Tabs */}
+          <div className="flex gap-4 mb-2">
+            {["student", "staff"].map((role) => (
               <button
-                type="button"
-                onClick={() => setStudentShowPassword(!studentShowPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-blue-600 hover:underline"
+                key={role}
+                onClick={() => setActiveCard(role)}
+                className={`px-5 py-2 rounded-full text-sm font-medium transition ${
+                  activeCard === role
+                    ? "bg-blue-600 text-white"
+                    : "bg-white border border-blue-600 text-blue-600"
+                }`}
               >
-                {studentShowPassword ? "Hide" : "Show"}
+                {role.charAt(0).toUpperCase() + role.slice(1)}
               </button>
-            </div>
-            <TextBox
-              type={studentShowPassword ? "text" : "password"}
-              placeholder="Confirm password"
-              value={studentConfirmPassword}
-              onChange={(e) => setStudentConfirmPassword(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
-            />
-            <Button
-              className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
-              onClick={handleStudentRegistration}
-            >
-              Register
-            </Button>
-    
-            <div className="text-center text-sm text-gray-500">or register with</div>
-            <a
-              href="#"
-              className="flex items-center justify-center gap-2 px-4 py-2 border border-red-500 text-red-500 rounded-md hover:bg-red-50 transition text-sm font-medium"
-            >
-              <i className="bx bxl-google text-lg"></i> Google
-            </a>
+            ))}
           </div>
-    
-          {/* Staff Registration Form */}
+  
+          {/* Sliding Form Container */}
           <div
-            className={`absolute top-0 left-full w-full h-full p-8 space-y-5 transition-all duration-500 ease-in-out ${
-              activeCard === "staff" ? "-translate-x-full opacity-100" : "translate-x-0 opacity-0 pointer-events-none"
-            }`}
+            className="relative w-[200%] flex transition-transform duration-500 ease-in-out"
+            style={{
+              transform: activeCard === "student" ? "translateX(0%)" : "translateX(-50%)",
+            }}
           >
-            <h2 className="text-xl font-bold text-blue-800 text-center">Register as Staff</h2>
-    
-            {staffError && <div className="text-red-500 text-sm text-center">{staffError}</div>}
-    
-            <TextBox
-              type="text"
-              placeholder="Enter your name"
-              value={staffName}
-              onChange={(e) => setStaffName(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
-            />
-            <TextBox
-              type="email"
-              placeholder="Enter your email"
-              value={staffEmail}
-              onChange={(e) => setStaffEmail(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
-            />
-            <div className="relative">
-              <TextBox
-                type={staffShowPassword ? "text" : "password"}
-                placeholder="Create password"
-                value={staffPassword}
-                onChange={(e) => setStaffPassword(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
-              />
+            {/* STUDENT FORM */}
+            <div className="w-full px-1 space-y-4">
+              <h2 className="text-2xl font-bold text-gray-900">Register as Student</h2>
+              {studentError && <div className="text-red-500 text-sm">{studentError}</div>}
+  
+              <TextBox type="text" placeholder="Full Name" value={studentName} onChange={(e) => setStudentName(e.target.value)} />
+              <TextBox type="email" placeholder="Email" value={studentEmail} onChange={(e) => setStudentEmail(e.target.value)} />
+              
+              <div className="relative">
+                <TextBox type={studentShowPassword ? "text" : "password"} placeholder="Password" value={studentPassword} onChange={(e) => setStudentPassword(e.target.value)} />
+                <button onClick={() => setStudentShowPassword(!studentShowPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-blue-600">Show</button>
+              </div>
+  
+              <TextBox type={studentShowPassword ? "text" : "password"} placeholder="Confirm Password" value={studentConfirmPassword} onChange={(e) => setStudentConfirmPassword(e.target.value)} />
+  
+              <Button onClick={handleStudentRegistration} className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700">Register</Button>
+  
+              <div className="text-center text-sm text-gray-500">or register with</div>
+              <a href="#" className="flex items-center justify-center gap-2 px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 transition text-sm font-medium">
+                <i className="bx bxl-google text-lg"></i> Google
+              </a>
             </div>
-            <TextBox
-              type={staffShowPassword ? "text" : "password"}
-              placeholder="Confirm password"
-              value={staffConfirmPassword}
-              onChange={(e) => setStaffConfirmPassword(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
-            />
-            <Button
-              className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
-              onClick={handleStaffRegistration}
-            >
-              Register
-            </Button>
-    
-            <div className="text-center text-sm text-gray-500">or register with</div>
-            <a
-              href="#"
-              className="flex items-center justify-center gap-2 px-4 py-2 border border-red-500 text-red-500 rounded-md hover:bg-red-50 transition text-sm font-medium"
-            >
-              <i className="bx bxl-google text-lg"></i> Google
-            </a>
+  
+            {/* STAFF FORM */}
+            <div className="w-full px-1 space-y-4">
+              <h2 className="text-2xl font-bold text-gray-900">Register as Staff</h2>
+              {staffError && <div className="text-red-500 text-sm">{staffError}</div>}
+  
+              <TextBox type="text" placeholder="Full Name" value={staffName} onChange={(e) => setStaffName(e.target.value)} />
+              <TextBox type="email" placeholder="Email" value={staffEmail} onChange={(e) => setStaffEmail(e.target.value)} />
+              <TextBox type="password" placeholder="Password" value={staffPassword} onChange={(e) => setStaffPassword(e.target.value)} />
+              <TextBox type="password" placeholder="Confirm Password" value={staffConfirmPassword} onChange={(e) => setStaffConfirmPassword(e.target.value)} />
+  
+              <Button onClick={handleStaffRegistration} className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700">Register</Button>
+  
+              <div className="text-center text-sm text-gray-500">or register with</div>
+              <a href="#" className="flex items-center justify-center gap-2 px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 transition text-sm font-medium">
+                <i className="bx bxl-google text-lg"></i> Google
+              </a>
+            </div>
           </div>
-        </div>
-    
-        {/* Bottom Links */}
-        <div className="mt-6 text-sm text-blue-700 flex flex-col items-center gap-1">
-          <a href="/login" className="hover:underline">
-            Already have an account? Login
-          </a>
-          <a href="/org-registration" className="hover:underline">
-            Register as Organization
-          </a>
+  
+          <div className="text-center text-sm text-gray-500 mt-4">
+            Already have an account? <a href="/login" className="text-blue-600 hover:underline">Login</a>
+          </div>
         </div>
       </div>
-    );    
+  
+      {/* RIGHT PANEL: Testimonial Section */}
+      <div className="hidden md:block relative w-1/2 h-screen">
+        <img
+          src="src/assets/quotes.png"
+          alt="Testimonial"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-black/30" />
+        <div className="absolute bottom-12 px-10 w-full text-white text-center">
+          <div className="bg-black/40 backdrop-blur-md p-4 rounded-xl max-w-lg mx-auto">
+            <p className="text-sm italic leading-relaxed">
+              “The Course of UX Research in Studl was an eye-opening experience that provided me with invaluable insights and practical skills. The instructors were knowledgeable and engaging, guiding us through real-world scenarios and making the learning process enjoyable.”
+            </p>
+            <div className="mt-4 font-semibold text-white">Laila Changgun</div>
+            <div className="text-sm text-gray-300">UX Intern – YouTube</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
