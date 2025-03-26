@@ -21,6 +21,8 @@ export default function Registration() {
   const [staffPassword, setStaffPassword] = useState("");
   const [staffConfirmPassword, setStaffConfirmPassword] = useState("");
   const [staffError, setStaffError] = useState("");
+  
+  // eslint-disable-next-line no-unused-vars
   const [staffShowPassword] = useState(false);
 
   const handleStudentRegistration = async () => {
