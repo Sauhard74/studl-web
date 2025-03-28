@@ -1,7 +1,8 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import Login from "./pages/Login";  // Ensure this path is correct
-import Registration from "./pages/registration";  // Ensure this path is correct
-import RegisterAsOrganization from "./pages/RegisterAsOrganization";  // Ensure this path is correct
+import Login from "./pages/Login";  
+import Registration from "./pages/registration";  
+import RegisterAsOrganization from "./pages/RegisterAsOrganization"; 
+
 
 function App() {
   return (

@@ -10,6 +10,9 @@ export default function AppRoutes() {
         <Route path="/" element={<Home />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/login" element={<Login />} />
+         <Route path="/register" element={<Registration />} />
+                <Route path="/register-as-organization" element={<RegisterAsOrganization />} />
+         
       </Routes>
     </Router>
   );

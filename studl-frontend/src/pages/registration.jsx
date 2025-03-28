@@ -1,7 +1,10 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
-import Button from "../components/Button"; // Assuming you have a Button component
-import TextBox from "../components/TextBox"; // Assuming you have a TextBox component
+import Button from "../components/Button"; 
+import TextBox from "../components/TextBox"; 
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function Registration() {
   const navigate = useNavigate();
