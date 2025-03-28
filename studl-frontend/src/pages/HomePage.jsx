@@ -3,7 +3,7 @@ import NavBar from "./NavBar";
 import Card from "./Card";
 
 const Home = () => {
-  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+  const [hoveredCard, setHoveredCard] = useState(null);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-blue-50 transition-all duration-300">

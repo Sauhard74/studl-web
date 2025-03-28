@@ -73,6 +73,7 @@ export default function OrganizationRegistration() {
       } else {
         setOrgError(data.message || "Organization registration failed");
       }
+    // eslint-disable-next-line no-unused-vars
     } catch (error) {
       setOrgError("Server error, please try again.");
     }
