@@ -1,19 +1,16 @@
 import React, { useState } from "react";
-import Button from "../components/Button";
-import TextBox from "../components/TextBox";
+import Button from "../components/Button"; // Assuming you have a Button component
+import TextBox from "../components/TextBox"; // Assuming you have a TextBox component
 import { Link } from "react-router-dom";
 
 export default function Login() {
   const [activeTab, setActiveTab] = useState("student");
-
   const [studentEmail, setStudentEmail] = useState("");
   const [studentPassword, setStudentPassword] = useState("");
   const [showStudentPassword, setShowStudentPassword] = useState(false);
-
   const [staffEmail, setStaffEmail] = useState("");
   const [staffPassword, setStaffPassword] = useState("");
   const [showStaffPassword, setShowStaffPassword] = useState(false);
-
   const [error, setError] = useState("");
 
   const handleLogin = async (type) => {
@@ -43,49 +40,43 @@ export default function Login() {
   };
 
   return (
-    <div className="flex min-h-screen">
-      {/* LEFT PANEL: Sliding Login Form */}
-      <div className="flex-1 flex items-center justify-center bg-white px-6 py-12 relative">
+    <div className="flex min-h-screen bg-blue-50">
+      {/* Left Panel */}
+      <div className="flex-1 flex flex-col items-center justify-center bg-white px-8 py-12 shadow-lg rounded-lg">
         <div className="absolute top-6 left-6 text-xl font-semibold text-blue-700">Studl</div>
-  
-        <div className="w-full max-w-md space-y-6 relative overflow-hidden h-[480px]">
-          {/* Tabs */}
-          <div className="flex gap-4 mb-2">
-            {["student", "staff"].map((role) => (
-              <button
-                key={role}
-                onClick={() => setActiveTab(role)}
-                className={`px-5 py-2 rounded-full text-sm font-medium transition ${
-                  activeTab === role
-                    ? "bg-blue-600 text-white"
-                    : "bg-white border border-blue-600 text-blue-600"
-                }`}
-              >
-                {role.charAt(0).toUpperCase() + role.slice(1)}
-              </button>
-            ))}
-          </div>
-  
-          {/* Slide-In Forms */}
-          <div
-            className="relative w-[200%] flex transition-transform duration-500 ease-in-out"
-            style={{
-              transform: activeTab === "student" ? "translateX(0%)" : "translateX(-50%)",
-            }}
-          >
-            {/* STUDENT FORM */}
-            <div className="w-full px-1 space-y-4">
+        
+        {/* Toggle Buttons */}
+        <div className="flex gap-4 mb-8">
+          {["student", "staff"].map((role) => (
+            <button
+              key={role}
+              onClick={() => setActiveTab(role)}
+              className={`px-6 py-2 rounded-full text-sm font-medium transition ${
+                activeTab === role
+                  ? "bg-blue-600 text-white"
+                  : "bg-white border border-blue-600 text-blue-600"
+              }`}
+            >
+              {role.charAt(0).toUpperCase() + role.slice(1)}
+            </button>
+          ))}
+        </div>
+
+        {/* Login Forms */}
+        <div className="w-full max-w-md space-y-6">
+          {/* Student Form */}
+          {activeTab === "student" && (
+            <div className="w-full px-4 space-y-6">
               <h2 className="text-2xl font-bold text-gray-900">Login as Student</h2>
               <p className="text-sm text-gray-500">Enter your details to access your student account</p>
-              {error && activeTab === "student" && (
-                <div className="text-red-500 text-sm">{error}</div>
-              )}
-  
+              {error && <div className="text-red-500 text-sm">{error}</div>}
+
               <TextBox
                 type="email"
                 placeholder="Email"
                 value={studentEmail}
                 onChange={(e) => setStudentEmail(e.target.value)}
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
               />
               <div className="relative">
                 <TextBox
@@ -93,6 +84,7 @@ export default function Login() {
                   placeholder="Password"
                   value={studentPassword}
                   onChange={(e) => setStudentPassword(e.target.value)}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
                 />
                 <button
                   type="button"
@@ -102,14 +94,14 @@ export default function Login() {
                   {showStudentPassword ? "Hide" : "Show"}
                 </button>
               </div>
-  
+
               <Button
                 className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700"
                 onClick={() => handleLogin("student")}
               >
                 Sign In
               </Button>
-  
+
               <div className="text-center text-sm text-gray-500">or sign in with</div>
               <a
                 href="#"
@@ -118,20 +110,21 @@ export default function Login() {
                 <i className="bx bxl-google text-lg"></i> Google
               </a>
             </div>
-  
-            {/* STAFF FORM */}
-            <div className="w-full px-1 space-y-4">
+          )}
+
+          {/* Staff Form */}
+          {activeTab === "staff" && (
+            <div className="w-full px-4 space-y-6">
               <h2 className="text-2xl font-bold text-gray-900">Login as Staff</h2>
               <p className="text-sm text-gray-500">Enter your details to access staff dashboard</p>
-              {error && activeTab === "staff" && (
-                <div className="text-red-500 text-sm">{error}</div>
-              )}
-  
+              {error && <div className="text-red-500 text-sm">{error}</div>}
+
               <TextBox
                 type="email"
                 placeholder="Email"
                 value={staffEmail}
                 onChange={(e) => setStaffEmail(e.target.value)}
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
               />
               <div className="relative">
                 <TextBox
@@ -139,6 +132,7 @@ export default function Login() {
                   placeholder="Password"
                   value={staffPassword}
                   onChange={(e) => setStaffPassword(e.target.value)}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
                 />
                 <button
                   type="button"
@@ -148,14 +142,14 @@ export default function Login() {
                   {showStaffPassword ? "Hide" : "Show"}
                 </button>
               </div>
-  
+
               <Button
                 className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700"
                 onClick={() => handleLogin("staff")}
               >
                 Sign In
               </Button>
-  
+
               <div className="text-center text-sm text-gray-500">or sign in with</div>
               <a
                 href="#"
@@ -164,21 +158,28 @@ export default function Login() {
                 <i className="bx bxl-google text-lg"></i> Google
               </a>
             </div>
-          </div>
-  
-          <div className="text-center text-sm text-gray-500 mt-4">
-            Don’t have an account?{" "}
-            <Link to="/register" className="text-blue-600 hover:underline">
-              Sign up
-            </Link>
-          </div>
+          )}
+        </div>
+
+        {/* Register and Register as Organization Buttons */}
+        <div className="mt-6 flex justify-center gap-4">
+          <Link to="/registration">
+            <Button className="w-auto bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600">
+              Register
+            </Button>
+          </Link>
+          <Link to="/register-as-organization">
+            <Button className="w-auto bg-blue-700 text-white py-2 px-6 rounded-md hover:bg-blue-800">
+              Register as Organization
+            </Button>
+          </Link>
         </div>
       </div>
-  
-      {/* RIGHT PANEL: Testimonial */}
+
+      {/* Right Panel with Image */}
       <div className="hidden md:block relative w-1/2 h-screen">
         <img
-          src="src/assets/quotes.png"
+          src="src/assets/quotes.png"  // Replace with your image path
           alt="Testimonial"
           className="w-full h-full object-cover"
         />
@@ -194,5 +195,5 @@ export default function Login() {
         </div>
       </div>
     </div>
-  );    
+  );
 }

@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import Button from "../components/Button";
-import TextBox from "../components/TextBox";
-import { useNavigate } from "react-router-dom"; 
+import Button from "../components/Button"; // Assuming you have a Button component
+import TextBox from "../components/TextBox"; // Assuming you have a TextBox component
+import { useNavigate } from "react-router-dom";
 
 export default function Registration() {
   const navigate = useNavigate();
-  const [activeCard, setActiveCard] = useState("student"); // For animation control
-  
+
   // Student registration state
   const [studentName, setStudentName] = useState("");
   const [studentEmail, setStudentEmail] = useState("");
@@ -14,16 +13,13 @@ export default function Registration() {
   const [studentConfirmPassword, setStudentConfirmPassword] = useState("");
   const [studentError, setStudentError] = useState("");
   const [studentShowPassword, setStudentShowPassword] = useState(false);
-  
+
   // Staff registration state
   const [staffName, setStaffName] = useState("");
   const [staffEmail, setStaffEmail] = useState("");
   const [staffPassword, setStaffPassword] = useState("");
   const [staffConfirmPassword, setStaffConfirmPassword] = useState("");
   const [staffError, setStaffError] = useState("");
-  
-  // eslint-disable-next-line no-unused-vars
-  const [staffShowPassword] = useState(false);
 
   const handleStudentRegistration = async () => {
     if (!studentName || !studentEmail || !studentPassword || !studentConfirmPassword) {
@@ -42,11 +38,11 @@ export default function Registration() {
       const response = await fetch("API KEY", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ 
-          name: studentName, 
-          email: studentEmail, 
-          password: studentPassword, 
-          userType: "student" 
+        body: JSON.stringify({
+          name: studentName,
+          email: studentEmail,
+          password: studentPassword,
+          userType: "student",
         }),
       });
       if (response.ok) {
@@ -55,7 +51,6 @@ export default function Registration() {
       } else {
         setStudentError("Registration failed. Please try again.");
       }
-    // eslint-disable-next-line no-unused-vars
     } catch (error) {
       setStudentError("Server error, please try again.");
     }
@@ -78,11 +73,11 @@ export default function Registration() {
       const response = await fetch("API KEY", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ 
-          name: staffName, 
-          email: staffEmail, 
-          password: staffPassword, 
-          userType: "staff" 
+        body: JSON.stringify({
+          name: staffName,
+          email: staffEmail,
+          password: staffPassword,
+          userType: "staff",
         }),
       });
       if (response.ok) {
@@ -91,21 +86,20 @@ export default function Registration() {
       } else {
         setStaffError("Registration failed. Please try again.");
       }
-    // eslint-disable-next-line no-unused-vars
     } catch (error) {
       setStaffError("Server error, please try again.");
     }
   };
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen bg-gray-50">
       {/* LEFT PANEL: Sliding Registration Form */}
       <div className="flex-1 flex items-center justify-center bg-white px-6 py-12 relative">
         <div className="absolute top-6 left-6 text-xl font-semibold text-blue-700">Studl</div>
-  
+
         <div className="w-full max-w-md space-y-6 relative overflow-hidden h-[540px]">
           {/* Tabs */}
-          <div className="flex gap-4 mb-2">
+          <div className="flex gap-4 mb-4">
             {["student", "staff"].map((role) => (
               <button
                 key={role}
@@ -120,7 +114,7 @@ export default function Registration() {
               </button>
             ))}
           </div>
-  
+
           {/* Sliding Form Container */}
           <div
             className="relative w-[200%] flex transition-transform duration-500 ease-in-out"
@@ -129,68 +123,49 @@ export default function Registration() {
             }}
           >
             {/* STUDENT FORM */}
-            <div className="w-full px-1 space-y-4">
+            <div className="w-full px-4 space-y-4">
               <h2 className="text-2xl font-bold text-gray-900">Register as Student</h2>
               {studentError && <div className="text-red-500 text-sm">{studentError}</div>}
-  
+
               <TextBox type="text" placeholder="Full Name" value={studentName} onChange={(e) => setStudentName(e.target.value)} />
               <TextBox type="email" placeholder="Email" value={studentEmail} onChange={(e) => setStudentEmail(e.target.value)} />
-              
+
               <div className="relative">
                 <TextBox type={studentShowPassword ? "text" : "password"} placeholder="Password" value={studentPassword} onChange={(e) => setStudentPassword(e.target.value)} />
                 <button onClick={() => setStudentShowPassword(!studentShowPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-blue-600">Show</button>
               </div>
-  
+
               <TextBox type={studentShowPassword ? "text" : "password"} placeholder="Confirm Password" value={studentConfirmPassword} onChange={(e) => setStudentConfirmPassword(e.target.value)} />
-  
+
               <Button onClick={handleStudentRegistration} className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700">Register</Button>
-  
+
               <div className="text-center text-sm text-gray-500">or register with</div>
               <a href="#" className="flex items-center justify-center gap-2 px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 transition text-sm font-medium">
                 <i className="bx bxl-google text-lg"></i> Google
               </a>
             </div>
-  
+
             {/* STAFF FORM */}
-            <div className="w-full px-1 space-y-4">
+            <div className="w-full px-4 space-y-4">
               <h2 className="text-2xl font-bold text-gray-900">Register as Staff</h2>
               {staffError && <div className="text-red-500 text-sm">{staffError}</div>}
-  
+
               <TextBox type="text" placeholder="Full Name" value={staffName} onChange={(e) => setStaffName(e.target.value)} />
               <TextBox type="email" placeholder="Email" value={staffEmail} onChange={(e) => setStaffEmail(e.target.value)} />
               <TextBox type="password" placeholder="Password" value={staffPassword} onChange={(e) => setStaffPassword(e.target.value)} />
               <TextBox type="password" placeholder="Confirm Password" value={staffConfirmPassword} onChange={(e) => setStaffConfirmPassword(e.target.value)} />
-  
+
               <Button onClick={handleStaffRegistration} className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700">Register</Button>
-  
+
               <div className="text-center text-sm text-gray-500">or register with</div>
               <a href="#" className="flex items-center justify-center gap-2 px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 transition text-sm font-medium">
                 <i className="bx bxl-google text-lg"></i> Google
               </a>
             </div>
           </div>
-  
+
           <div className="text-center text-sm text-gray-500 mt-4">
             Already have an account? <a href="/login" className="text-blue-600 hover:underline">Login</a>
-          </div>
-        </div>
-      </div>
-  
-      {/* RIGHT PANEL: Testimonial Section */}
-      <div className="hidden md:block relative w-1/2 h-screen">
-        <img
-          src="src/assets/quotes.png"
-          alt="Testimonial"
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-black/30" />
-        <div className="absolute bottom-12 px-10 w-full text-white text-center">
-          <div className="bg-black/40 backdrop-blur-md p-4 rounded-xl max-w-lg mx-auto">
-            <p className="text-sm italic leading-relaxed">
-              “The Course of UX Research in Studl was an eye-opening experience that provided me with invaluable insights and practical skills. The instructors were knowledgeable and engaging, guiding us through real-world scenarios and making the learning process enjoyable.”
-            </p>
-            <div className="mt-4 font-semibold text-white">Laila Changgun</div>
-            <div className="text-sm text-gray-300">UX Intern – YouTube</div>
           </div>
         </div>
       </div>
